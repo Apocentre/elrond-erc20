@@ -1,5 +1,5 @@
 [package]
-name = "crowdfunding-wasm"
+name = "erc20-wasm"
 version = "0.0.0"
 authors = [ "you",]
 edition = "2018"
@@ -20,7 +20,7 @@ lto = true
 debug = false
 panic = "abort"
 
-[dependencies.crowdfunding]
+[dependencies.erc20]
 path = ".."
 
 [dependencies.elrond-wasm-node]

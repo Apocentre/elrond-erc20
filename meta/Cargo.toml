@@ -1,5 +1,5 @@
 [package]
-name = "crowdfunding-meta"
+name = "erc20-meta"
 version = "0.0.0"
 edition = "2018"
 publish = false
@@ -7,7 +7,7 @@ authors = [ "you",]
 
 [dev-dependencies]
 
-[dependencies.crowdfunding]
+[dependencies.erc20]
 path = ".."
 
 [dependencies.elrond-wasm]

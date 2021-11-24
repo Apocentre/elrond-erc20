@@ -5,11 +5,12 @@
 #![no_std]
 
 elrond_wasm_node::wasm_endpoints! {
-    adder
+    erc20
     (
         init
-        add
-        getSum
+        allowance
+        balanceOf
+        totalSupply
     )
 }
 

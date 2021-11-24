@@ -147,15 +147,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "elrond-wasm-node"
-version = "0.23.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a42c0cccfcebe57c35276a921f428ea46d17f0bc24f488643dd0678c10772ee2"
-dependencies = [
- "elrond-wasm",
-]
-
-[[package]]
 name = "endian-type"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -166,9 +157,16 @@ name = "erc20"
 version = "0.0.0"
 dependencies = [
  "elrond-wasm",
- "elrond-wasm-debug",
  "elrond-wasm-derive",
- "elrond-wasm-node",
+]
+
+[[package]]
+name = "erc20-meta"
+version = "0.0.0"
+dependencies = [
+ "elrond-wasm",
+ "elrond-wasm-debug",
+ "erc20",
 ]
 
 [[package]]
