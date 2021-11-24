@@ -106,12 +106,7 @@ pub trait ERC20 {
   ) -> SCResult<()> {
     let caller = self.blockchain().get_caller();
 
-    // user should have enough balance
-    let balance = self.balance_of(&caller).get();
-    require!(amount <= balance, &b"approval amount exceeds balance"[..]);
-
     self.allowance(&caller, &spender).set(&amount);
-
     self.approve_event(&caller, &spender, &amount);
 
     Ok(())
