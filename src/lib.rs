@@ -66,4 +66,15 @@ pub trait ERC20 {
 
     Ok(())
   }
+
+  // API
+  #[endpoint]
+  fn transfer(
+    &self,
+    recipient: ManagedAddress,
+    amount: BigUint
+  ) -> SCResult<()> {
+    let caller = self.blockchain().get_caller();
+    self.exec_transfer(&caller, recipient, amount)
+  }
 }
