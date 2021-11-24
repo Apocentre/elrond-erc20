@@ -9,8 +9,11 @@ elrond_wasm_node::wasm_endpoints! {
     (
         init
         allowance
+        approve
         balanceOf
         totalSupply
+        transfer
+        transfer_from
     )
 }
 

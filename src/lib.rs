@@ -75,7 +75,7 @@ pub trait ERC20 {
     amount: BigUint
   ) -> SCResult<()> {
     let caller = self.blockchain().get_caller();
-    self.exec_transfer(&caller, to, amount)
+    self.exec_transfer(caller, to, amount)
   }
 
   #[endpoint]
@@ -89,12 +89,31 @@ pub trait ERC20 {
 
     // check allowance
     self.allowance(&from, &caller).update(|allowance| {
-      require!(amount <= allowance, &b"Insufficient allowance"[..]);
+      require!(amount <= *allowance, &b"Insufficient allowance"[..]);
       *allowance += &amount;
+
       Ok(())
     })?;
 
+    self.exec_transfer(from, to, amount)
+  }
 
-    self.exec_transfer(from, to, amount);
+  #[endpoint]
+  fn approve(
+    &self,
+    spender: ManagedAddress,
+    amount: BigUint
+  ) -> SCResult<()> {
+    let caller = self.blockchain().get_caller();
+
+    // user should have enough balance
+    let balance = self.balance_of(&caller).get();
+    require!(amount <= balance, &b"approval amount exceeds balance"[..]);
+
+    self.allowance(&caller, &spender).set(&amount);
+
+    self.approve_event(&caller, &spender, &amount);
+
+    Ok(())
   }
 }
