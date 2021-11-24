@@ -53,7 +53,7 @@ pub trait ERC20 {
   ) -> SCResult<()> {
     // check sender's balance
     self.balance_of(&sender).update(|balance| {
-      require!(amount <= *balance, "insufficient funds");
+      require!(amount <= *balance, &b"insufficient funds"[..]);
       *balance -= &amount;
 
       Ok(())
@@ -71,10 +71,30 @@ pub trait ERC20 {
   #[endpoint]
   fn transfer(
     &self,
-    recipient: ManagedAddress,
+    to: ManagedAddress,
     amount: BigUint
   ) -> SCResult<()> {
     let caller = self.blockchain().get_caller();
-    self.exec_transfer(&caller, recipient, amount)
+    self.exec_transfer(&caller, to, amount)
+  }
+
+  #[endpoint]
+  fn transfer_from(
+    &self,
+    from: ManagedAddress,
+    to: ManagedAddress,
+    amount: BigUint
+  ) -> SCResult<()> {
+    let caller = self.blockchain().get_caller();
+
+    // check allowance
+    self.allowance(&from, &caller).update(|allowance| {
+      require!(amount <= allowance, &b"Insufficient allowance"[..]);
+      *allowance += &amount;
+      Ok(())
+    })?;
+
+
+    self.exec_transfer(from, to, amount);
   }
 }
