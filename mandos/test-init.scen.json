@@ -1,0 +1,56 @@
+{
+  "name": "erc20 deployment test",
+  "steps": [
+    {
+      "step": "setState",
+      "accounts": {
+        "address:my_address": {
+          "nonce": "0",
+          "balance": "100,000,000"
+        }
+      },
+      "newAddresses": [
+        {
+          "creatorAddress": "address:my_address",
+          "creatorNonce": "0",
+          "newAddress": "sc:the_erc20_contract"
+        }
+      ]
+    },
+    {
+      "step": "scDeploy",
+      "tx": {
+        "from": "address:my_address",
+        "contractCode": "file:../output/erc20.wasm",
+        "value": "0",
+        "gasLimit": "2,000,000",
+        "gasPrice": "0",
+        "arguments": [
+          "500,000,000"
+        ]
+      },
+      "expect": {
+        "status": "0",
+        "gas": "*",
+        "refund": "*"
+      }
+    },
+    {
+      "step": "checkState",
+      "accounts": {
+        "address:my_address": {
+          "nonce": "1",
+          "balance": "1,000,000"
+        },
+        "sc:the_erc20_contract": {
+          "nonce": "0",
+          "balance": "0",
+          "storage": {
+            "''totalSupply": "500,000,000"
+          },
+          "code": "file:../output/erc20.wasm"
+        }
+      }
+    }
+  ]
+}
