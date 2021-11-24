@@ -6,11 +6,11 @@ elrond_wasm::imports!();
 pub trait ERC20 {
   // Storage
   #[view(totalSupply)]
-  #[storage_mapper("total_supply")]
+  #[storage_mapper("totalSupply")]
   fn total_supply(&self) -> SingleValueMapper<BigUint>;
 
   #[view(balanceOf)]
-  #[storage_mapper("balance_of")]
+  #[storage_mapper("balanceOf")]
   fn balance_of(&self, account: &ManagedAddress) -> SingleValueMapper<BigUint>;
 
   #[view(allowance)]
@@ -78,7 +78,7 @@ pub trait ERC20 {
     self.exec_transfer(caller, to, amount)
   }
 
-  #[endpoint]
+  #[endpoint(transferFrom)]
   fn transfer_from(
     &self,
     from: ManagedAddress,

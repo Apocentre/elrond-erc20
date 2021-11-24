@@ -13,7 +13,7 @@ elrond_wasm_node::wasm_endpoints! {
         balanceOf
         totalSupply
         transfer
-        transfer_from
+        transferFrom
     )
 }
 
